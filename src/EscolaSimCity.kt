@@ -20,8 +20,8 @@ se for 1 RODAR TODO O PROGRAMA NOVAMENTE
  */
 
 /* estrutura
-menu inicial explicando o q faz
-pedindo e validando notas = if array / else, insira novamente
+//menu inicial explicando o q faz
+//pedindo e validando notas = if array / else, insira novamente
 calculo média com retorno parametro puxa as notas
 exibir média puxar do retorno anterior
 //caixa opção 1 ou 2  if 1 rodar novamente else if 2 sair else retorna a mesma caixa opção
@@ -29,17 +29,53 @@ exibir média puxar do retorno anterior
 
 
 fun main(){
+    println("Instruções iniciais:")
+    println("Nesse sistema você irá inserir as 4 notas (de um mesmo aluno), quando for pedido, e ao final te mostraremos qual foi a média final.")
+    println("Inicializando sistema...")
     sistamaEscola()
 }
 
-fun sistamaEscola(){
-    println("\nOlá! Bem vindo ao nosso sistema de notas da Escola SimCity")
+fun sistamaEscola() {
+    println("\n-----------------------------------------------------")
+    println("Bem vindo ao nosso sistema de notas da Escola SimCity")
+    println("-----------------------------------------------------")
 
-
-
-
+    var listaNotas = cadastroNotasAluno()
+    var media = calculoMedia(listaNotas)
+    println("A média semestral do aluno foi $media")
 
     perguntaExecutarNovamente()
+}
+
+fun cadastroNotasAluno(): DoubleArray{
+    var listaNotas = DoubleArray(4)
+    for (i in listaNotas.indices) {
+        println("Escreva a média o aluno teve na ${i + 1} prova")
+        var notaAluno = readln().toDouble()
+        listaNotas[i] = analisandoNotas(notaAluno)
+    }
+    return listaNotas
+}
+
+fun calculoMedia(listaNotas: DoubleArray): Double {
+    var media: Double = 0.0
+    listaNotas.forEachIndexed { index, _ ->
+        media += listaNotas[index]
+    }
+    return media / 4
+}
+
+fun analisandoNotas(notaAluno: Double): Double{
+    var analiseNota = notaAluno                      // criei uma nova variável pq ñ posso alterar valor de parâmetro
+    if (analiseNota < 0 || analiseNota > 10 ) {
+        do {
+            println("Nota inválida! Insira um valor entre 0 e 10")
+            analiseNota = readln().toDouble()
+        }
+            while (analiseNota < 0 || analiseNota > 10)
+    }
+    println("Nota cadastrada")
+    return analiseNota
 }
 
 fun perguntaExecutarNovamente(){
